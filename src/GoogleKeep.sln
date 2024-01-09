@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleKeep.Domain", "GoogleKeep.Domain\GoogleKeep.Domain.csproj", "{C97DB945-D0E1-4CBA-9C7A-BAF79204EDD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleKeep.Api", "GoogleKeep.Api\GoogleKeep.Api.csproj", "{F95534EE-793E-4797-A12D-12FAE6055101}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleKeep.Tests", "GoogleKeep.Tests\GoogleKeep.Tests.csproj", "{70DAF3C4-599F-421F-A832-F12B2E456116}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C97DB945-D0E1-4CBA-9C7A-BAF79204EDD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C97DB945-D0E1-4CBA-9C7A-BAF79204EDD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C97DB945-D0E1-4CBA-9C7A-BAF79204EDD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C97DB945-D0E1-4CBA-9C7A-BAF79204EDD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F95534EE-793E-4797-A12D-12FAE6055101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F95534EE-793E-4797-A12D-12FAE6055101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F95534EE-793E-4797-A12D-12FAE6055101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F95534EE-793E-4797-A12D-12FAE6055101}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70DAF3C4-599F-421F-A832-F12B2E456116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70DAF3C4-599F-421F-A832-F12B2E456116}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70DAF3C4-599F-421F-A832-F12B2E456116}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70DAF3C4-599F-421F-A832-F12B2E456116}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
