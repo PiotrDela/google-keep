@@ -24,7 +24,7 @@
             return Value.GetHashCode();
         }
 
-        public static bool operator ==(EntityId a, EntityId b)
+        public static bool operator == (EntityId a, EntityId b)
         {
             if (object.Equals(a, null))
             {
@@ -39,7 +39,7 @@
             return a.Equals(b);
         }
 
-        public static bool operator !=(EntityId a, EntityId b)
+        public static bool operator != (EntityId a, EntityId b)
         {
             return !(a == b);
         }

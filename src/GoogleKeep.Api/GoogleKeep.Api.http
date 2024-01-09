@@ -1,6 +1,15 @@
 @GoogleKeep.Api_HostAddress = http://localhost:5033
 
-GET {{GoogleKeep.Api_HostAddress}}/weatherforecast/
+POST {{GoogleKeep.Api_HostAddress}}/api/notes
+Accept: application/json
+Content-Type: application/json
+
+{
+    "title": "New note"    
+}
+###
+
+GET {{GoogleKeep.Api_HostAddress}}/api/notes
 Accept: application/json
 
 ###

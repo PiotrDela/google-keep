@@ -2,6 +2,6 @@
 {
     public interface IRepository<TEntity> where TEntity: Entity, IAggregateRoot
     {
-        void Add(TEntity entity);
+        Task AddAsync(TEntity entity);
     }
 }
