@@ -1,4 +1,4 @@
-﻿using GoogleKeep.Api.Notes;
+﻿using GoogleKeep.Api.Notes.ApiModel;
 using GoogleKeep.Domain.Entities;
 using System.Net;
 using System.Net.Http.Json;
@@ -11,10 +11,10 @@ namespace GoogleKeep.Tests.Notes
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public async Task ShouldReturnBadRequestWhenTitleIsEmptyOrWhitespace(string title)
+        public async Task PostShouldRespondWithBadRequestWhenTitleIsEmptyOrWhitespace(string title)
         {
             // given
-            var httpClient = HttpClientFactory.Create();
+            var httpClient = new NotesControllerTestCase().CreateClient();
 
             // when
             var response = await httpClient.PostAsJsonAsync("/api/notes", new CreateNoteRequest() { Title = title });
@@ -24,19 +24,51 @@ namespace GoogleKeep.Tests.Notes
         }
 
         [Fact]
-        public async Task ShouldReturnCreatedStatusCode()
+        public async Task PostShouldRespondWithLocationHeader()
         {
             // given
             const string noteTitle = "Lorem ipsum";
-            var httpClient = HttpClientFactory.Create();
+            var httpClient = new NotesControllerTestCase().CreateClient();
 
             // when
             var response = await httpClient.PostAsJsonAsync("/api/notes", new CreateNoteRequest() { Title = noteTitle });
-            var noteId = await response.Content.ReadFromJsonAsync<NoteId>();
 
             // then
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-            Assert.NotNull(noteId);
+            Assert.NotNull(response.Headers.Location);
+        }
+
+        [Fact]
+        public async Task GetShouldRespondWithNotFoundWhenNoteDoesNotExist()
+        {
+            // given
+            var httpClient = new NotesControllerTestCase().CreateClient();
+
+            // when
+            var response = await httpClient.GetAsync($"/api/notes/{Guid.NewGuid()}");
+
+            // then
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetShouldRespondWithNoteDto()
+        {
+            // given
+            var note = Note.Create("Test note");
+
+            var httpClient = new NotesControllerTestCase()
+                .WithNote(note)
+                .CreateClient();
+
+            // when
+            var response = await httpClient.GetAsync($"/api/notes/{note.Id.Value}");
+            var noteDto = await response.Content.ReadFromJsonAsync<NoteDto>();
+
+            // then
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(note.Id.Value, noteDto.Id);
+            Assert.Equal(note.Title, noteDto.Title);
         }
     }
 }

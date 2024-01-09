@@ -11,5 +11,15 @@ namespace GoogleKeep.Infrastructure.Notes
             notes.Add(entity.Id, entity);
             return Task.CompletedTask;            
         }
+
+        public Task<Note> GetAsync(NoteId noteId)
+        {
+            if (notes.TryGetValue(noteId, out var note))
+            {
+                return Task.FromResult(note);
+            }
+
+            return Task.FromResult<Note>(null);
+        }
     }
 }

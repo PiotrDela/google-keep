@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using GoogleKeep.Api.Notes.ApiModel;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoogleKeep.Api.Notes
@@ -15,11 +16,24 @@ namespace GoogleKeep.Api.Notes
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNote([FromBody] CreateNoteRequest request)
+        public async Task<IActionResult> CreateNote([FromBody]CreateNoteRequest request)
         {
             var noteId = await sender.Send(new CreateNoteCommandCommand(request.Title));
 
-            return Created(string.Empty, noteId);
+            return CreatedAtRoute("GetNoteRoute", new { id = noteId.Value }, null);
+        }
+
+        [HttpGet]
+        [Route("{id:guid}", Name = "GetNoteRoute")]
+        public async Task<IActionResult> GetNote([FromRoute]Guid id)
+        {
+            var note = await sender.Send(new GetNoteByIdQuery(id));
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(note);
         }
     }
 }

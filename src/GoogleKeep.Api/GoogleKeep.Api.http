@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 ###
 
-GET {{GoogleKeep.Api_HostAddress}}/api/notes
+GET {{GoogleKeep.Api_HostAddress}}/api/notes/e9bc85b2-3327-41b5-88b7-8673831089
 Accept: application/json
 
 ###

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GoogleKeep.Api.Notes
+namespace GoogleKeep.Api.Notes.ApiModel
 {
     public class CreateNoteRequest
     {
