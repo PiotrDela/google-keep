@@ -3,22 +3,22 @@ using Xunit;
 
 namespace GoogleKeep.Tests.SeedOfWork
 {
-    public class EntityIdTests
+    public class TypedIdTests
     {
         [Fact]
         public void EqualityTests()
         {
             var guid = Guid.NewGuid();
 
-            Assert.Equal(new EntityId(guid), new EntityId(guid));
-            Assert.NotEqual(new EntityId(guid), new EntityId(Guid.NewGuid()));
+            Assert.Equal(new TypedId(guid), new TypedId(guid));
+            Assert.NotEqual(new TypedId(guid), new TypedId(Guid.NewGuid()));
         }
 
         [Fact]
         public void DifferentTypesTests()
         {
             var guid = Guid.NewGuid();
-            var entityId = new EntityId(guid);
+            var entityId = new TypedId(guid);
 
             Assert.NotEqual(entityId, (object)guid);
         }
@@ -28,10 +28,10 @@ namespace GoogleKeep.Tests.SeedOfWork
         {
             var guid = Guid.NewGuid();
 
-            var same1 = new EntityId(guid);
-            var same2 = new EntityId(guid);
+            var same1 = new TypedId(guid);
+            var same2 = new TypedId(guid);
 
-            var different = new EntityId(Guid.NewGuid());
+            var different = new TypedId(Guid.NewGuid());
 
             Assert.True(same1 == same2);
             Assert.True(same1 != different);

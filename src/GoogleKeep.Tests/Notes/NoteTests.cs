@@ -11,7 +11,8 @@ namespace GoogleKeep.Tests.Notes
         [InlineData(" ")]
         public void ShouldNotAllowToCreateNoteWithTitleEmptyOrWhitespace(string title)
         {
-            Assert.Throws<ArgumentException>(() => Note.Create(title));
+            var owner = new User(new UserId(Guid.NewGuid()));
+            Assert.Throws<ArgumentException>(() => Note.Create(title, owner));
         }
 
         [Fact]
@@ -19,9 +20,10 @@ namespace GoogleKeep.Tests.Notes
         {
             // given
             const string title = "New note";
+            var owner = new User(new UserId(Guid.NewGuid()));
 
             // when
-            var note = Note.Create(title);
+            var note = Note.Create(title, owner);
 
             // then
             Assert.Equal(title, note.Title);

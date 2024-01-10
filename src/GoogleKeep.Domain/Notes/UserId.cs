@@ -2,9 +2,9 @@
 
 namespace GoogleKeep.Domain.Entities
 {
-    public class NoteId : TypedId
+    public class UserId : TypedId
     {
-        public NoteId(Guid value) : base(value)
+        public UserId(Guid value) : base(value)
         {
         }
     }

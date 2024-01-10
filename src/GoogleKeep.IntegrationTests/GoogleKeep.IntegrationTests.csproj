@@ -23,12 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GoogleKeep.Api\GoogleKeep.Api.csproj" />
     <ProjectReference Include="..\GoogleKeep.Domain\GoogleKeep.Domain.csproj" />
     <ProjectReference Include="..\GoogleKeep.Infrastructure\GoogleKeep.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Notes\" />
   </ItemGroup>
 
 </Project>

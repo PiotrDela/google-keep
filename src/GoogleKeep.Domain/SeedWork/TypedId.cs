@@ -1,20 +1,20 @@
 ﻿namespace GoogleKeep.Domain.SeedWork
 {
-    public class EntityId : IEquatable<EntityId>
+    public class TypedId : IEquatable<TypedId>
     {
         public Guid Value { get; }
 
-        public EntityId(Guid value)
+        public TypedId(Guid value)
         {
             Value = value;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is EntityId entityId && Equals(entityId);
+            return obj is TypedId entityId && Equals(entityId);
         }
 
-        public bool Equals(EntityId other)
+        public bool Equals(TypedId other)
         {
             return Value.Equals(other.Value);
         }
@@ -24,7 +24,7 @@
             return Value.GetHashCode();
         }
 
-        public static bool operator == (EntityId a, EntityId b)
+        public static bool operator == (TypedId a, TypedId b)
         {
             if (object.Equals(a, null))
             {
@@ -39,7 +39,7 @@
             return a.Equals(b);
         }
 
-        public static bool operator != (EntityId a, EntityId b)
+        public static bool operator != (TypedId a, TypedId b)
         {
             return !(a == b);
         }

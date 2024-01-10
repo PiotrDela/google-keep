@@ -7,8 +7,10 @@ namespace GoogleKeep.Infrastructure.Notes
 {
     public class AzureTableStorageRepository : INoteRepository
     {
-        private const string TableName = nameof(Note);
-        private const string TableEntityPropertyName = $"{nameof(Note)}Json";
+        public const string TableName = nameof(Note);
+
+        private const string JsonPropertyName = "Json";
+        private const string OwnerPropertyName = nameof(Note.Owner);
 
         private readonly TableClient tableClient;
 
@@ -25,7 +27,8 @@ namespace GoogleKeep.Infrastructure.Notes
 
             var tableEntity = new TableEntity(partitionKey, rowKey)
             {
-                [TableEntityPropertyName] = JsonSerializer.Serialize(entity)
+                [JsonPropertyName] = JsonSerializer.Serialize(entity),
+                [OwnerPropertyName] = entity.Owner.Id.Value
             };
 
             await this.tableClient.AddEntityAsync(tableEntity);
@@ -37,7 +40,7 @@ namespace GoogleKeep.Infrastructure.Notes
             var rowKey = NotePartitioningStrategy.GetRowKey(noteId);
 
             var tableEntity = await tableClient.GetEntityAsync<TableEntity>(partitionKey, rowKey);
-            var noteJson = (string)tableEntity.Value[TableEntityPropertyName];
+            var noteJson = (string)tableEntity.Value[JsonPropertyName];
 
             return JsonSerializer.Deserialize<Note>(noteJson);
         }

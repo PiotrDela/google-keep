@@ -5,11 +5,11 @@ namespace GoogleKeep.Api.Notes
 {
     public class GetNoteByIdQuery: IQuery<NoteDto>
     {
-        public Guid NoteId { get; set; }
+        public Guid NoteId { get; }
 
         public GetNoteByIdQuery(Guid noteId)
         {
-            NoteId = noteId;
+            this.NoteId = noteId;
         }
     }
 }

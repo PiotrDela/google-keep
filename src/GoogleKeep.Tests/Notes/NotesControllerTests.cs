@@ -56,7 +56,8 @@ namespace GoogleKeep.Tests.Notes
         public async Task GetShouldRespondWithNoteDto()
         {
             // given
-            var note = Note.Create("Test note");
+            var owner = new User(new UserId(Guid.NewGuid()));
+            var note = Note.Create("Test note", owner);
 
             var httpClient = new NotesControllerTestCase()
                 .WithNote(note)

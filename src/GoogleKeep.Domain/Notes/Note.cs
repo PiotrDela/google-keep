@@ -7,24 +7,26 @@ namespace GoogleKeep.Domain.Entities
     {
         public NoteId Id { get; }
         public string Title { get; }
-        public NoteContent Content { get; set; }
+        public NoteContent Content { get; }
+        public User Owner { get; }
 
-        public static Note Create(string title)
+        public static Note Create(string title, User owner)
         {
-            return new Note(new NoteId(Guid.NewGuid()), title, new NoteContent());
+            return new Note(new NoteId(Guid.NewGuid()), title, new NoteContent(), owner);
         }
 
         [JsonConstructor]
-        private Note(NoteId id, string title, NoteContent content)
+        private Note(NoteId id, string title, NoteContent content, User owner)
         {
             if (string.IsNullOrWhiteSpace(title))
             {
                 throw new ArgumentException($"{nameof(title)} cannot be null nor whitespace", nameof(title));
             }
 
-            Id = id;
-            Title = title;
-            Content = content;
+            this.Id = id;
+            this.Title = title;
+            this.Content = content;
+            this.Owner = owner;
         }
     }
 }

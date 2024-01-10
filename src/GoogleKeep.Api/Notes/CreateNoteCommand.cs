@@ -7,9 +7,12 @@ namespace GoogleKeep.Api.Notes
     {
         public string Title { get; }
 
-        public CreateNoteCommandCommand(string title)
+        public Guid OwnerId { get; }
+
+        public CreateNoteCommandCommand(string title, Guid ownerId)
         {
             this.Title = title;
+            this.OwnerId = ownerId;
         }
     }
 }

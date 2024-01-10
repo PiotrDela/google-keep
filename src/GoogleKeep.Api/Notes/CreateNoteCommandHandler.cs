@@ -14,7 +14,8 @@ namespace GoogleKeep.Api.Notes
 
         public async Task<NoteId> Handle(CreateNoteCommandCommand request, CancellationToken cancellationToken)
         {
-            var note = Note.Create(request.Title);
+            var noteOwner = new User(new UserId(request.OwnerId));
+            var note = Note.Create(request.Title, noteOwner);
             await repository.AddAsync(note);
             return note.Id;
         }

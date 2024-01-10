@@ -21,7 +21,8 @@ namespace GoogleKeep.Api.Notes
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateNote([FromBody]CreateNoteRequest request)
         {
-            var noteId = await sender.Send(new CreateNoteCommandCommand(request.Title));
+            var noteOwnerId = Guid.Parse("72442af3-5296-451c-a281-c38602d8c073");
+            var noteId = await sender.Send(new CreateNoteCommandCommand(request.Title, noteOwnerId));
 
             return CreatedAtRoute("GetNoteRoute", new { id = noteId.Value }, null);
         }
