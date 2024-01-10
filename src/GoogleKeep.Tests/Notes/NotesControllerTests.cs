@@ -2,6 +2,7 @@
 using GoogleKeep.Domain.Entities;
 using System.Net;
 using System.Net.Http.Json;
+using Xunit;
 
 namespace GoogleKeep.Tests.Notes
 {

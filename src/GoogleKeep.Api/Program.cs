@@ -1,4 +1,6 @@
+using Azure.Data.Tables;
 using GoogleKeep.Domain.Entities;
+using GoogleKeep.Infrastructure.AzureStorage;
 using GoogleKeep.Infrastructure.Notes;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +13,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton<INoteRepository, NoteInMemoryRepository>();
+
+var azureStorageConnectionString = builder.Configuration.GetConnectionString("AzureStorage");
+builder.Services.AddScoped(x => new TableServiceClient(azureStorageConnectionString));
+builder.Services.AddScoped(x => TableNamingConvention.Default());
+builder.Services.AddScoped<INoteRepository, AzureTableStorageRepository>();
 
 var app = builder.Build();
 
@@ -21,7 +27,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseHttpsRedirection();
 
