@@ -1,11 +1,13 @@
 ﻿using GoogleKeep.Api.Notes.ApiModel;
 using GoogleKeep.Domain.Entities;
+using GoogleKeep.Domain.Users;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit;
 
 namespace GoogleKeep.Tests.Notes
 {
+
     public class NotesControllerTests
     {
         [Theory]
@@ -65,10 +67,11 @@ namespace GoogleKeep.Tests.Notes
 
             // when
             var response = await httpClient.GetAsync($"/api/notes/{note.Id.Value}");
-            var noteDto = await response.Content.ReadFromJsonAsync<NoteDto>();
 
             // then
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            var noteDto = await response.Content.ReadFromJsonAsync<NoteDto>();
             Assert.Equal(note.Id.Value, noteDto.Id);
             Assert.Equal(note.Title, noteDto.Title);
         }

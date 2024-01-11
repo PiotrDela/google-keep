@@ -1,4 +1,4 @@
-﻿namespace GoogleKeep.Domain.Entities
+﻿namespace GoogleKeep.Domain.Users
 {
     public class User
     {
@@ -6,7 +6,7 @@
 
         public User(UserId id)
         {
-            this.Id = id;
+            Id = id;
         }
     }
 }

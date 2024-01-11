@@ -1,6 +1,6 @@
 ﻿using GoogleKeep.Domain.SeedWork;
 
-namespace GoogleKeep.Domain.Entities
+namespace GoogleKeep.Domain.Users
 {
     public class UserId : TypedId
     {

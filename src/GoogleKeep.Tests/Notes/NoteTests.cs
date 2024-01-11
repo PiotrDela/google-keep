@@ -1,4 +1,5 @@
 ﻿using GoogleKeep.Domain.Entities;
+using GoogleKeep.Domain.Users;
 using Xunit;
 
 namespace GoogleKeep.Tests.Notes

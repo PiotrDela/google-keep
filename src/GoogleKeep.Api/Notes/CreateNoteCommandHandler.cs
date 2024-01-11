@@ -1,5 +1,6 @@
 ﻿using GoogleKeep.Api.Commands;
 using GoogleKeep.Domain.Entities;
+using GoogleKeep.Domain.Users;
 
 namespace GoogleKeep.Api.Notes
 {

@@ -1,15 +1,28 @@
-@GoogleKeep.Api_HostAddress = http://localhost:5033
+@host = http://localhost:5033
 
-POST {{GoogleKeep.Api_HostAddress}}/api/notes
+# @name login
+POST {{host}}/api/authentication/token
+Content-Type: application/json
+Accept: application/json
+
+{
+
+}
+
+###
+POST {{host}}/api/notes
+Authorization: Bearer {{login.response.body.token}}
 Accept: application/json
 Content-Type: application/json
 
 {
     "title": "New note"    
 }
+
 ###
 
-GET {{GoogleKeep.Api_HostAddress}}/api/notes/1ee947c0-4985-43eb-86c1-73f7982bfbc4
+GET {{host}}/api/notes/1ee947c0-4985-43eb-86c1-73f7982bfbc4
 Accept: application/json
+Authorization: Bearer {{login.response.body.token}}
 
 ###

@@ -1,4 +1,5 @@
 ﻿using GoogleKeep.Domain.SeedWork;
+using GoogleKeep.Domain.Users;
 using System.Text.Json.Serialization;
 
 namespace GoogleKeep.Domain.Entities
