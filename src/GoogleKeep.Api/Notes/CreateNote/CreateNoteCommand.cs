@@ -1,9 +1,9 @@
 ﻿using GoogleKeep.Api.Commands;
 using GoogleKeep.Domain.Entities;
 
-namespace GoogleKeep.Api.Notes
+namespace GoogleKeep.Api.Notes.CreateNote
 {
-    public class CreateNoteCommandCommand: ICommand<NoteId>
+    public class CreateNoteCommandCommand : ICommand<NoteId>
     {
         public string Title { get; }
 
@@ -11,8 +11,8 @@ namespace GoogleKeep.Api.Notes
 
         public CreateNoteCommandCommand(string title, Guid ownerId)
         {
-            this.Title = title;
-            this.OwnerId = ownerId;
+            Title = title;
+            OwnerId = ownerId;
         }
     }
 }

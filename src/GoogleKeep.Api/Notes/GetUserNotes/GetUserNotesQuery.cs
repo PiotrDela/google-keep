@@ -1,7 +1,7 @@
 ﻿using GoogleKeep.Api.Notes.ApiModel;
 using GoogleKeep.Api.Queries;
 
-namespace GoogleKeep.Api.Notes
+namespace GoogleKeep.Api.Notes.GetUserNotes
 {
     public class GetUserNotesQuery : IQuery<IEnumerable<NoteDto>>
     {
@@ -9,7 +9,7 @@ namespace GoogleKeep.Api.Notes
 
         public GetUserNotesQuery(Guid userId)
         {
-            this.UserId = userId;
+            UserId = userId;
         }
     }
 }

@@ -7,7 +7,7 @@ using GoogleKeep.Infrastructure.AzureStorage;
 using GoogleKeep.Infrastructure.Notes;
 using System.Text.Json;
 
-namespace GoogleKeep.Api.Notes
+namespace GoogleKeep.Api.Notes.GetUserNotes
 {
     public class GetUserNotesQueryHandler : IQueryHandler<GetUserNotesQuery, IEnumerable<NoteDto>>
     {
@@ -15,14 +15,14 @@ namespace GoogleKeep.Api.Notes
 
         public GetUserNotesQueryHandler(TableServiceClient tableServiceClient, TableNamingConvention tableNamingConvention)
         {
-            this.tableClient = tableServiceClient.GetTableClient(tableNamingConvention.GetTableName(AzureTableStorageRepository.TableName));
+            tableClient = tableServiceClient.GetTableClient(tableNamingConvention.GetTableName(AzureTableStorageRepository.TableName));
         }
 
         public async Task<IEnumerable<NoteDto>> Handle(GetUserNotesQuery request, CancellationToken cancellationToken)
         {
             var partitionKey = NotePartitioningStrategy.GetPartitonKey();
 
-            var queryResult = this.tableClient.QueryAsync<TableEntity>($"PartitionKey eq '{partitionKey}' and {nameof(Note.Owner)} eq guid'{request.UserId}'", 10, null);
+            var queryResult = tableClient.QueryAsync<TableEntity>($"PartitionKey eq '{partitionKey}' and {nameof(Note.Owner)} eq guid'{request.UserId}'", 10, null);
 
             var dtos = new List<NoteDto>();
 
@@ -33,7 +33,7 @@ namespace GoogleKeep.Api.Notes
                     var noteJson = (string)entity["Json"];
                     var note = JsonSerializer.Deserialize<Note>(noteJson);
 
-                    dtos.Add(NoteDto.Create(note));                    
+                    dtos.Add(NoteDto.Create(note));
                 }
             }
 

@@ -1,4 +1,7 @@
 ﻿using GoogleKeep.Api.Notes.ApiModel;
+using GoogleKeep.Api.Notes.CreateNote;
+using GoogleKeep.Api.Notes.GetNoteById;
+using GoogleKeep.Api.Notes.GetUserNotes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

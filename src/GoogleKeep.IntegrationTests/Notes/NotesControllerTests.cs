@@ -1,6 +1,7 @@
 ﻿using GoogleKeep.Api.Notes.ApiModel;
 using GoogleKeep.Domain.Entities;
 using GoogleKeep.Domain.Users;
+using GoogleKeep.IntegrationTests.SeedWork;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit;
@@ -17,7 +18,7 @@ namespace GoogleKeep.Tests.Notes
         public async Task PostShouldRespondWithBadRequestWhenTitleIsEmptyOrWhitespace(string title)
         {
             // given
-            var httpClient = new NotesControllerTestCase().CreateClient();
+            var httpClient = new NotesWebApplicationFactory().CreateClient();
 
             // when
             var response = await httpClient.PostAsJsonAsync("/api/notes", new CreateNoteRequest() { Title = title });
@@ -31,7 +32,7 @@ namespace GoogleKeep.Tests.Notes
         {
             // given
             const string noteTitle = "Lorem ipsum";
-            var httpClient = new NotesControllerTestCase().CreateClient();
+            var httpClient = new NotesWebApplicationFactory().CreateClient();
 
             // when
             var response = await httpClient.PostAsJsonAsync("/api/notes", new CreateNoteRequest() { Title = noteTitle });
@@ -45,7 +46,7 @@ namespace GoogleKeep.Tests.Notes
         public async Task GetShouldRespondWithNotFoundWhenNoteDoesNotExist()
         {
             // given
-            var httpClient = new NotesControllerTestCase().CreateClient();
+            var httpClient = new NotesWebApplicationFactory().CreateClient();
 
             // when
             var response = await httpClient.GetAsync($"/api/notes/{Guid.NewGuid()}");
@@ -58,10 +59,12 @@ namespace GoogleKeep.Tests.Notes
         public async Task GetShouldRespondWithNoteDtoWhenCurrentIsAnOwner()
         {
             // given
-            var owner = new User(new UserId(FakeAuthenticationHandler.FakeUserId));
+            var guid = Guid.NewGuid();
+            var owner = new User(new UserId(guid));
             var note = Note.Create("Test note", owner);
 
-            var httpClient = new NotesControllerTestCase()
+            var httpClient = new NotesWebApplicationFactory()
+                .WithAuthenticatedUser(guid)
                 .WithNote(note)
                 .CreateClient();
 
@@ -72,6 +75,7 @@ namespace GoogleKeep.Tests.Notes
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             var noteDto = await response.Content.ReadFromJsonAsync<NoteDto>();
+            Assert.NotNull(noteDto);
             Assert.Equal(note.Id.Value, noteDto.Id);
             Assert.Equal(note.Title, noteDto.Title);
         }
@@ -83,7 +87,8 @@ namespace GoogleKeep.Tests.Notes
             var owner = new User(new UserId(Guid.NewGuid()));
             var note = Note.Create("Test note", owner);
 
-            var httpClient = new NotesControllerTestCase()
+            var httpClient = new NotesWebApplicationFactory()
+                .WithAuthenticatedUser(Guid.NewGuid())
                 .WithNote(note)
                 .CreateClient();
 

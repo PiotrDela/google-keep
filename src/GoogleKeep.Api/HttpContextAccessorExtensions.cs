@@ -1,4 +1,4 @@
-﻿namespace GoogleKeep.Api.Notes
+﻿namespace GoogleKeep.Api
 {
     public static class HttpContextAccessorExtensions
     {

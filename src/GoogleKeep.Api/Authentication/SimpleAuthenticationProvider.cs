@@ -9,6 +9,4 @@ namespace GoogleKeep.Api.Authentication
             return new IdentityUser<Guid>("Fake user");
         }
     }
-
-
 }

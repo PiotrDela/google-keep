@@ -30,6 +30,7 @@ namespace GoogleKeep.Tests.Notes
             Assert.Equal(title, note.Title);
             Assert.NotNull(note.Content);
             Assert.NotNull(note.Id);
+            Assert.Equal(owner, note.Owner);
         }
     }
 }

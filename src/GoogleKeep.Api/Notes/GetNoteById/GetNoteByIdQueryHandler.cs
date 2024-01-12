@@ -3,7 +3,7 @@ using GoogleKeep.Api.Queries;
 using GoogleKeep.Domain.Entities;
 using GoogleKeep.Domain.Users;
 
-namespace GoogleKeep.Api.Notes
+namespace GoogleKeep.Api.Notes.GetNoteById
 {
     public class GetNoteByIdQueryHandler : IQueryHandler<GetNoteByIdQuery, NoteDto>
     {

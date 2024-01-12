@@ -2,7 +2,7 @@
 using GoogleKeep.Domain.Entities;
 using GoogleKeep.Domain.Users;
 
-namespace GoogleKeep.Api.Notes
+namespace GoogleKeep.Api.Notes.CreateNote
 {
     public class CreateNoteCommandHandler : ICommandHandler<CreateNoteCommandCommand, NoteId>
     {

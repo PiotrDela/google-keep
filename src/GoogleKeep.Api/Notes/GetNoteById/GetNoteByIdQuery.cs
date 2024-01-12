@@ -1,9 +1,9 @@
 ﻿using GoogleKeep.Api.Notes.ApiModel;
 using GoogleKeep.Api.Queries;
 
-namespace GoogleKeep.Api.Notes
+namespace GoogleKeep.Api.Notes.GetNoteById
 {
-    public class GetNoteByIdQuery: IQuery<NoteDto>
+    public class GetNoteByIdQuery : IQuery<NoteDto>
     {
         public Guid NoteId { get; }
 
@@ -11,8 +11,8 @@ namespace GoogleKeep.Api.Notes
 
         public GetNoteByIdQuery(Guid noteId, Guid requestingUserId)
         {
-            this.NoteId = noteId;
-            this.RequestingUserId = requestingUserId;
+            NoteId = noteId;
+            RequestingUserId = requestingUserId;
         }
     }
 }
