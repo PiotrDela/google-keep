@@ -55,10 +55,10 @@ namespace GoogleKeep.Tests.Notes
         }
 
         [Fact]
-        public async Task GetShouldRespondWithNoteDto()
+        public async Task GetShouldRespondWithNoteDtoWhenCurrentIsAnOwner()
         {
             // given
-            var owner = new User(new UserId(Guid.NewGuid()));
+            var owner = new User(new UserId(FakeAuthenticationHandler.FakeUserId));
             var note = Note.Create("Test note", owner);
 
             var httpClient = new NotesControllerTestCase()
@@ -74,6 +74,24 @@ namespace GoogleKeep.Tests.Notes
             var noteDto = await response.Content.ReadFromJsonAsync<NoteDto>();
             Assert.Equal(note.Id.Value, noteDto.Id);
             Assert.Equal(note.Title, noteDto.Title);
+        }
+
+        [Fact]
+        public async Task GetShouldRespondWithForbiddenWhenCurrentUserIsNotAnOwner()
+        {
+            // given
+            var owner = new User(new UserId(Guid.NewGuid()));
+            var note = Note.Create("Test note", owner);
+
+            var httpClient = new NotesControllerTestCase()
+                .WithNote(note)
+                .CreateClient();
+
+            // when
+            var response = await httpClient.GetAsync($"/api/notes/{note.Id.Value}");
+
+            // then
+            Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }
     }
 }

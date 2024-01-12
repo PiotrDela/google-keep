@@ -11,11 +11,12 @@ namespace GoogleKeep.Api.Authentication
     public partial class AuthenticationController : Controller
     {
         private readonly IAuthenticationProvider authenticationProvider;
-        private readonly JwtTokenFactory jwtTokenFactory = new JwtTokenFactory();
+        private readonly JwtTokenFactory jwtTokenFactory;
 
-        public AuthenticationController(IAuthenticationProvider authenticationProvider)
+        public AuthenticationController(IAuthenticationProvider authenticationProvider, JwtTokenFactory jwtTokenFactory)
         {
             this.authenticationProvider = authenticationProvider ?? throw new ArgumentNullException(nameof(authenticationProvider));
+            this.jwtTokenFactory = jwtTokenFactory ?? throw new ArgumentNullException(nameof(jwtTokenFactory));
         }
 
         [AllowAnonymous]

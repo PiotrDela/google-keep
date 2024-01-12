@@ -41,17 +41,31 @@ namespace GoogleKeep.Api.Notes
         [Route("{id:guid}", Name = "GetNoteRoute")]
         [ProducesResponseType(typeof(NoteDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetNote([FromRoute]Guid id)
         {
-            var note = await sender.Send(new GetNoteByIdQuery(id));
-            if (note == null)
+            var requestingUserId = httpContextAccessor.ParseUserId();
+            if (requestingUserId.HasValue == false)
             {
-                return NotFound();
+                return Unauthorized();
             }
 
-            return Ok(note);
+            try
+            {
+                var note = await sender.Send(new GetNoteByIdQuery(id, requestingUserId.Value));
+                if (note == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(note);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
         }
 
         [HttpGet]

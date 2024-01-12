@@ -7,6 +7,13 @@ namespace GoogleKeep.Api.Authentication
 {
     public class JwtTokenFactory
     {
+        private readonly JwtSecurityTokenSettings settings;
+
+        public JwtTokenFactory(JwtSecurityTokenSettings settings)
+        {
+            this.settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        }
+
         public JwtSecurityToken CreateToken(string userName, IEnumerable<Claim> additionalClaims = null)
         {
             var basicClaims = new List<Claim>()
@@ -20,16 +27,13 @@ namespace GoogleKeep.Api.Authentication
                 basicClaims.AddRange(additionalClaims);
             }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ba9142eff388474c95811256682c2ea604a4902fa5c54e69a1d54d269f0ae3bd"));
+            var key = new SymmetricSecurityKey(this.settings.SigningKey);
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var issuer = "https://mysite.com";
-            var audience = "https://mysite.com";
-
             return new JwtSecurityToken(
-                issuer: issuer,
-                audience: audience,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromHours(2)),
+                issuer: this.settings.Issuer,
+                audience: this.settings.Audience,
+                expires: DateTime.UtcNow.Add(this.settings.Lifespan),
                 claims: basicClaims,
                 signingCredentials: creds
             );

@@ -7,9 +7,12 @@ namespace GoogleKeep.Api.Notes
     {
         public Guid NoteId { get; }
 
-        public GetNoteByIdQuery(Guid noteId)
+        public Guid RequestingUserId { get; }
+
+        public GetNoteByIdQuery(Guid noteId, Guid requestingUserId)
         {
             this.NoteId = noteId;
+            this.RequestingUserId = requestingUserId;
         }
     }
 }

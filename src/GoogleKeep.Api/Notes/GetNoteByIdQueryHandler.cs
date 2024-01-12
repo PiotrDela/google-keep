@@ -1,6 +1,7 @@
 ﻿using GoogleKeep.Api.Notes.ApiModel;
 using GoogleKeep.Api.Queries;
 using GoogleKeep.Domain.Entities;
+using GoogleKeep.Domain.Users;
 
 namespace GoogleKeep.Api.Notes
 {
@@ -21,11 +22,13 @@ namespace GoogleKeep.Api.Notes
                 return null;
             }
 
-            return new NoteDto
+            var requestingUserId = new UserId(request.RequestingUserId);
+            if (note.Owner.Id != requestingUserId)
             {
-                Id = note.Id.Value,
-                Title = note.Title,
-            };            
+                throw new UnauthorizedAccessException();
+            }
+
+            return NoteDto.Create(note);
         }
     }
 }

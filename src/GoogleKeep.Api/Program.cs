@@ -23,7 +23,9 @@ builder.Services.AddScoped(x => new TableServiceClient(azureStorageConnectionStr
 builder.Services.AddScoped(x => TableNamingConvention.Default());
 builder.Services.AddScoped<INoteRepository, AzureTableStorageRepository>();
 
+var tokenSettings = new JwtSecurityTokenSettings("https://mysite.com", "https://mysite.com", Encoding.UTF8.GetBytes("ba9142eff388474c95811256682c2ea604a4902fa5c54e69a1d54d269f0ae3bd"), TimeSpan.FromHours(1));
 builder.Services.AddScoped<IAuthenticationProvider, SimpleAuthenticationProvider>();
+builder.Services.AddScoped(x => new JwtTokenFactory(tokenSettings));
 
 // Configure Authentication
 builder.Services.AddAuthentication(auth =>
@@ -37,11 +39,11 @@ builder.Services.AddAuthentication(auth =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
-        ValidIssuer = "https://mysite.com",
+        ValidIssuer = tokenSettings.Issuer,
         ValidateAudience = true,
-        ValidAudience = "https://mysite.com",
+        ValidAudience = tokenSettings.Audience,
         ValidateIssuerSigningKey = false,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ba9142eff388474c95811256682c2ea604a4902fa5c54e69a1d54d269f0ae3bd"))
+        IssuerSigningKey = new SymmetricSecurityKey(tokenSettings.SigningKey)
     };
 });
 

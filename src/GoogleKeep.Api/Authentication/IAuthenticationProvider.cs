@@ -6,6 +6,4 @@ namespace GoogleKeep.Api.Authentication
     {
         public IdentityUser<Guid> AuthenticateUser();
     }
-
-
 }

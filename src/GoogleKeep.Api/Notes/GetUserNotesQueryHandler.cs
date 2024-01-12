@@ -33,11 +33,7 @@ namespace GoogleKeep.Api.Notes
                     var noteJson = (string)entity["Json"];
                     var note = JsonSerializer.Deserialize<Note>(noteJson);
 
-                    dtos.Add(new NoteDto
-                    {
-                        Id = note.Id.Value,
-                        Title = note.Title
-                    });
+                    dtos.Add(NoteDto.Create(note));                    
                 }
             }
 
